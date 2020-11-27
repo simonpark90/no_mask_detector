@@ -20,17 +20,21 @@ def CreateDataset():
         label = [0 for i in range(num_classes)]
         label[idex] = 1
         image_dir = groups_folder_path + categorie + '/'
-  
-        for top, dir, f in os.walk(image_dir):
-            for filename in f:
-                try:
-                    print(image_dir+filename)
-                    img = cv2.imread(image_dir+filename)
-                    img = cv2.resize(img,(224,224))
-                    X.append(img/256)
-                    Y.append(label)
-                except Exception as e:
-                    print(str(e))
+        print(image_dir)
+        for dir_top, dir, file in os.walk(image_dir):
+            for dir_path in dir:
+                path = image_dir + dir_path
+                for dir_top, dir_mid, dir_file in os.walk(path):
+                    for filename in dir_file:
+                        try:
+                            print(path+'/'+filename)
+                            img = cv2.imread(path+'/'+filename)
+                            img = cv2.resize(img,(224,224))
+                            X.append(img/256)
+                            Y.append(label)
+                        except Exception as e:
+                            print(str(e))
+    
  
     X = np.array(X)
     Y = np.array(Y)
