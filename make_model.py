@@ -11,7 +11,7 @@ from tensorflow.keras import layers
     version : 1.0
     base_model : MobileNet V2
     create date : 2020.11.16
-    fixed data : 
+    
 '''
 
 
