@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:/Users/joshua.newnham/Dropbox/Method - Personal/Machine Learning with CoreML/Projects/Chapter3/Start/LanguageTutor/ObjectRecognition.xcodeproj">
+      location = "group:/Users/parkjoohyun/git/mask_deeplearning/no_mask_ios/ObjectRecognition/gifs/loadAnim.gif">
+   </FileRef>
+   <FileRef
+      location = "self:">
    </FileRef>
 </Workspace>

@@ -38,10 +38,12 @@ public class VideoCapture : NSObject{
     }
     
     func initCamera() -> Bool{
+        // 여러 구성 처리를 일괄 작업한다는 신호를 보낸다. 변경사항은 commitConfiguration 메서드르 호출해야 반영된다.
         captureSession.beginConfiguration()
+        //원하는 품질을 고른다.
         captureSession.sessionPreset = AVCaptureSession.Preset.medium
         
-        guard let captureDevice = AVCaptureDevice.default(for: AVMediaType.video) else {
+        guard let captureDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: .front) else {
             print("ERROR : no video devices available")
             return false;
         }
@@ -55,21 +57,24 @@ public class VideoCapture : NSObject{
             captureSession.addInput(videoInput)
         }
         
+        //프레임의 도착지
         let videoOutput = AVCaptureVideoDataOutput()
         
         let settings:[String: Any] = [
-            kCVPixelBufferPixelFormatTypeKey as String: NSNumber(value: kCVPixelFormatType_32BGRA)
+            kCVPixelBufferPixelFormatTypeKey as String: NSNumber(value: kCVPixelFormatType_32BGRA) //풀컬러
         ]
         videoOutput.videoSettings = settings
-        //디스패치 큐가 사용 중일 떄 도착한 프레임은 모두 폐기
+        // 디스패치 큐가 사용중일 때 도착한 프레임은 모두 폐기된다.
         videoOutput.alwaysDiscardsLateVideoFrames = true
+        // 디스패치 큐로 유입된 프레임을 전달하는 델리게이트를 구현한다.
         videoOutput.setSampleBufferDelegate(self, queue: sessionQueue)
-        
         if captureSession.canAddOutput(videoOutput){
+            // 출력의 구성요청의 일부로 세션에 추가한다.
             captureSession.addOutput(videoOutput)
         }
+        // 이미지가 회전하는것을 방지하기위해 세로방향으로 요청한다.
         videoOutput.connection(with: AVMediaType.video)?.videoOrientation = .portrait
-        
+        // 구성을 커밋하여 변경사항을 반영한다.
         captureSession.commitConfiguration()
         
         return true

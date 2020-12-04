@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="9ZW-M3-dWC">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="IFi-Ji-R42">
+            <objects>
+                <viewController id="9ZW-M3-dWC" customClass="ViewController" customModule="ObjectRecognition" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="pH9-pZ-VZP">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QkB-Ki-6nP" customClass="CapturePreviewView" customModule="ObjectRecognition" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="178" width="414" height="489"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="admin list" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="am5-hH-4uY" userLabel="adminList">
+                                        <rect key="frame" x="8" y="8" width="364" height="121"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <color key="textColor" systemColor="labelColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="인식된 객체 이름" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ah2-p4-oh2">
+                                        <rect key="frame" x="0.0" y="301" width="414" height="110"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zRz-BD-Szv">
+                                        <rect key="frame" x="144" y="438" width="124" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="관리자 호출">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <font key="NSFont" size="18" name="NanumSquareOTFEB"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </state>
+                                        <state key="highlighted">
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="heavy"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onClickWithSender:" destination="9ZW-M3-dWC" eventType="touchUpInside" id="tkH-nY-uBA"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="center" usesAttributedText="YES" allowsEditingTextAttributes="YES" id="YUA-pc-PMj">
+                                <rect key="frame" x="0.0" y="62" width="414" height="95"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <attributedString key="attributedText">
+                                    <fragment>
+                                        <string key="content">마스크 착용 감지 시스템입니다
+얼굴을 가까이 해주세요</string>
+                                        <attributes>
+                                            <color key="NSColor" systemColor="labelColor"/>
+                                            <font key="NSFont" size="23" name="NanumSquareRoundOTFEB"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" paragraphSpacing="20" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" usesAttributedText="YES" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Mc-8q-xuC">
+                                <rect key="frame" x="111" y="809" width="192" height="27"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="잠시만 기다려 주세요">
+                                        <attributes>
+                                            <font key="NSFont" size="23" name="NanumSquareRoundOTFR"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" verticalCompressionResistancePriority="749" misplaced="YES" image="load" translatesAutoresizingMaskIntoConstraints="NO" id="KkB-7f-3UF">
+                                <rect key="frame" x="168" y="717" width="82" height="82"/>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="cZl-Il-egs"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="7Mc-8q-xuC" firstAttribute="centerX" secondItem="KkB-7f-3UF" secondAttribute="centerX" constant="-2" id="0OG-mk-gZj"/>
+                            <constraint firstItem="QkB-Ki-6nP" firstAttribute="top" secondItem="YUA-pc-PMj" secondAttribute="bottom" constant="21" id="7mz-9t-Mev"/>
+                            <constraint firstItem="KkB-7f-3UF" firstAttribute="top" secondItem="QkB-Ki-6nP" secondAttribute="bottom" constant="50" id="7oE-f1-XWr"/>
+                            <constraint firstItem="7Mc-8q-xuC" firstAttribute="top" secondItem="KkB-7f-3UF" secondAttribute="bottom" constant="10" id="BH8-0L-YG0"/>
+                            <constraint firstItem="QkB-Ki-6nP" firstAttribute="leading" secondItem="YUA-pc-PMj" secondAttribute="leading" id="Bzl-jQ-62i"/>
+                            <constraint firstItem="YUA-pc-PMj" firstAttribute="top" secondItem="cZl-Il-egs" secondAttribute="top" constant="18" id="Dnr-Bt-bME"/>
+                            <constraint firstItem="QkB-Ki-6nP" firstAttribute="top" secondItem="pH9-pZ-VZP" secondAttribute="top" constant="178" id="OQ0-Bm-JzU"/>
+                            <constraint firstItem="QkB-Ki-6nP" firstAttribute="leading" secondItem="pH9-pZ-VZP" secondAttribute="leading" id="Q5d-T9-wnY"/>
+                            <constraint firstItem="7Mc-8q-xuC" firstAttribute="centerX" secondItem="QkB-Ki-6nP" secondAttribute="centerX" id="RGq-nx-EL3"/>
+                            <constraint firstAttribute="bottom" secondItem="QkB-Ki-6nP" secondAttribute="bottom" constant="229" id="Wcg-Ca-yqt"/>
+                            <constraint firstItem="cZl-Il-egs" firstAttribute="bottom" secondItem="7Mc-8q-xuC" secondAttribute="bottom" constant="26" id="a3p-Wu-2ME"/>
+                            <constraint firstItem="7Mc-8q-xuC" firstAttribute="centerX" secondItem="pH9-pZ-VZP" secondAttribute="centerX" id="iAn-RW-Kxh"/>
+                            <constraint firstItem="7Mc-8q-xuC" firstAttribute="centerX" secondItem="YUA-pc-PMj" secondAttribute="centerX" id="jqW-74-4fi"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="adminButton" destination="zRz-BD-Szv" id="gLz-r6-JDG"/>
+                        <outlet property="adminList" destination="am5-hH-4uY" id="q0M-eh-bkz"/>
+                        <outlet property="bottomStateView" destination="7Mc-8q-xuC" id="kxu-vz-6Ik"/>
+                        <outlet property="classifiedLabel" destination="ah2-p4-oh2" id="J6t-Gn-7Bb"/>
+                        <outlet property="previewView" destination="QkB-Ki-6nP" id="Uau-Xc-aTd"/>
+                        <outlet property="stateIcon" destination="KkB-7f-3UF" id="GFH-4f-BO7"/>
+                        <outlet property="topStateView" destination="YUA-pc-PMj" id="2yW-8H-87X"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MxI-TB-CZX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="140.57971014492756" y="82.366071428571431"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="load" width="396" height="396"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

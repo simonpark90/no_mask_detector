@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		686ED299251DBC4B00F6BD33 /* MobileNetV2.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 686ED298251DBC4B00F6BD33 /* MobileNetV2.mlmodel */; };
-		68CF71E82557CCCB00B499CB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 68CF71E62557CCCB00B499CB /* Main.storyboard */; };
-		8404AC0920A248A600E1DAEA /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8404AC0820A248A600E1DAEA /* CoreVideo.framework */; };
 		8404AC0B20A248AE00E1DAEA /* CoreML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8404AC0A20A248AE00E1DAEA /* CoreML.framework */; };
 		8404AC0D20A248B400E1DAEA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8404AC0C20A248B400E1DAEA /* AVFoundation.framework */; };
 		84CD690A1FE5472200C5B7EC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CD69091FE5472200C5B7EC /* AppDelegate.swift */; };
@@ -19,11 +16,15 @@
 		84CD691C1FE688EA00C5B7EC /* VideoCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CD691B1FE688EA00C5B7EC /* VideoCapture.swift */; };
 		84CD691E1FE6892200C5B7EC /* CaptureVideoPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CD691D1FE6892200C5B7EC /* CaptureVideoPreviewView.swift */; };
 		84CD69201FE6893A00C5B7EC /* CIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CD691F1FE6893A00C5B7EC /* CIImage.swift */; };
+		D743776B2578EF57009BAB47 /* iOSDevCenters+GIF.swift in Sources */ = {isa = PBXBuildFile; fileRef = D743776A2578EF57009BAB47 /* iOSDevCenters+GIF.swift */; };
+		D74A440325735A9300FD6C76 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8404AC0820A248A600E1DAEA /* CoreVideo.framework */; };
+		D74A440A25735BEF00FD6C76 /* MobileNetV2.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = D74A440925735BEF00FD6C76 /* MobileNetV2.mlmodel */; };
+		D74A441125735F8A00FD6C76 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D74A441025735F8A00FD6C76 /* Main.storyboard */; };
+		D74A443025776AA200FD6C76 /* NanumSquareEB.otf in Resources */ = {isa = PBXBuildFile; fileRef = D74A442F25776AA000FD6C76 /* NanumSquareEB.otf */; };
+		D7E779672579271900C6B7FE /* loadAnim.gif in Resources */ = {isa = PBXBuildFile; fileRef = D7E779652579261C00C6B7FE /* loadAnim.gif */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		686ED298251DBC4B00F6BD33 /* MobileNetV2.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = MobileNetV2.mlmodel; path = ../../../../../../Downloads/MobileNetV2.mlmodel; sourceTree = "<group>"; };
-		68CF71E72557CCCB00B499CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "../../../../../../ios_정답/Chapter3/Completed/ObjectRecognitionWithVision/ObjectRecognition/Base.lproj/Main.storyboard"; sourceTree = "<group>"; };
 		8404AC0820A248A600E1DAEA /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		8404AC0A20A248AE00E1DAEA /* CoreML.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreML.framework; path = System/Library/Frameworks/CoreML.framework; sourceTree = SDKROOT; };
 		8404AC0C20A248B400E1DAEA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -36,6 +37,11 @@
 		84CD691B1FE688EA00C5B7EC /* VideoCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCapture.swift; sourceTree = "<group>"; };
 		84CD691D1FE6892200C5B7EC /* CaptureVideoPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureVideoPreviewView.swift; sourceTree = "<group>"; };
 		84CD691F1FE6893A00C5B7EC /* CIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIImage.swift; sourceTree = "<group>"; };
+		D743776A2578EF57009BAB47 /* iOSDevCenters+GIF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "iOSDevCenters+GIF.swift"; path = "/Users/parkjoohyun/git/mask_deeplearning/no_mask_ios/ObjectRecognition/font/iOSDevCenters+GIF.swift"; sourceTree = "<absolute>"; };
+		D74A440925735BEF00FD6C76 /* MobileNetV2.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = MobileNetV2.mlmodel; path = ../../../../Downloads/MobileNetV2.mlmodel; sourceTree = "<group>"; };
+		D74A441025735F8A00FD6C76 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		D74A442F25776AA000FD6C76 /* NanumSquareEB.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareEB.otf; sourceTree = "<group>"; };
+		D7E779652579261C00C6B7FE /* loadAnim.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = loadAnim.gif; path = /Users/parkjoohyun/git/mask_deeplearning/no_mask_ios/ObjectRecognition/gifs/loadAnim.gif; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,7 +51,7 @@
 			files = (
 				8404AC0D20A248B400E1DAEA /* AVFoundation.framework in Frameworks */,
 				8404AC0B20A248AE00E1DAEA /* CoreML.framework in Frameworks */,
-				8404AC0920A248A600E1DAEA /* CoreVideo.framework in Frameworks */,
+				D74A440325735A9300FD6C76 /* CoreVideo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,18 +88,37 @@
 		84CD69081FE5472200C5B7EC /* ObjectRecognition */ = {
 			isa = PBXGroup;
 			children = (
-				686ED298251DBC4B00F6BD33 /* MobileNetV2.mlmodel */,
+				D74A443A2577871100FD6C76 /* gifs */,
+				D74A442A257682FF00FD6C76 /* font */,
 				84CD69091FE5472200C5B7EC /* AppDelegate.swift */,
+				D743776A2578EF57009BAB47 /* iOSDevCenters+GIF.swift */,
 				84CD690B1FE5472200C5B7EC /* ViewController.swift */,
-				68CF71E62557CCCB00B499CB /* Main.storyboard */,
 				84CD69101FE5472200C5B7EC /* Assets.xcassets */,
 				84CD69121FE5472200C5B7EC /* LaunchScreen.storyboard */,
+				D74A440925735BEF00FD6C76 /* MobileNetV2.mlmodel */,
 				84CD69151FE5472200C5B7EC /* Info.plist */,
 				84CD691B1FE688EA00C5B7EC /* VideoCapture.swift */,
 				84CD691D1FE6892200C5B7EC /* CaptureVideoPreviewView.swift */,
 				84CD691F1FE6893A00C5B7EC /* CIImage.swift */,
+				D74A441025735F8A00FD6C76 /* Main.storyboard */,
 			);
 			path = ObjectRecognition;
+			sourceTree = "<group>";
+		};
+		D74A442A257682FF00FD6C76 /* font */ = {
+			isa = PBXGroup;
+			children = (
+				D74A442F25776AA000FD6C76 /* NanumSquareEB.otf */,
+			);
+			path = font;
+			sourceTree = "<group>";
+		};
+		D74A443A2577871100FD6C76 /* gifs */ = {
+			isa = PBXGroup;
+			children = (
+				D7E779652579261C00C6B7FE /* loadAnim.gif */,
+			);
+			path = gifs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -156,8 +181,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7E779672579271900C6B7FE /* loadAnim.gif in Resources */,
+				D74A441125735F8A00FD6C76 /* Main.storyboard in Resources */,
+				D74A443025776AA200FD6C76 /* NanumSquareEB.otf in Resources */,
 				84CD69141FE5472200C5B7EC /* LaunchScreen.storyboard in Resources */,
-				68CF71E82557CCCB00B499CB /* Main.storyboard in Resources */,
 				84CD69111FE5472200C5B7EC /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -169,9 +196,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				686ED299251DBC4B00F6BD33 /* MobileNetV2.mlmodel in Sources */,
+				D74A440A25735BEF00FD6C76 /* MobileNetV2.mlmodel in Sources */,
 				84CD69201FE6893A00C5B7EC /* CIImage.swift in Sources */,
 				84CD691E1FE6892200C5B7EC /* CaptureVideoPreviewView.swift in Sources */,
+				D743776B2578EF57009BAB47 /* iOSDevCenters+GIF.swift in Sources */,
 				84CD690C1FE5472200C5B7EC /* ViewController.swift in Sources */,
 				84CD691C1FE688EA00C5B7EC /* VideoCapture.swift in Sources */,
 				84CD690A1FE5472200C5B7EC /* AppDelegate.swift in Sources */,
@@ -181,14 +209,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		68CF71E62557CCCB00B499CB /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				68CF71E72557CCCB00B499CB /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		84CD69121FE5472200C5B7EC /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -251,7 +271,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -305,7 +325,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -319,9 +339,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3KH42AY7UZ;
+				DEVELOPMENT_TEAM = GPPXQWWJUH;
 				INFOPLIST_FILE = "$(SRCROOT)/ObjectRecognition/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -338,9 +358,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3KH42AY7UZ;
+				DEVELOPMENT_TEAM = GPPXQWWJUH;
 				INFOPLIST_FILE = "$(SRCROOT)/ObjectRecognition/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
