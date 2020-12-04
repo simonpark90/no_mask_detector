@@ -43,7 +43,7 @@ public class VideoCapture : NSObject{
         //원하는 품질을 고른다.
         captureSession.sessionPreset = AVCaptureSession.Preset.medium
         
-        guard let captureDevice = AVCaptureDevice.default(for: AVMediaType.video) else {
+        guard let captureDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: .front) else {
             print("ERROR : no video devices available")
             return false;
         }
