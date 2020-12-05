@@ -32,7 +32,7 @@ def create_model(inputs, classes, training = True, fine_tune_at = -1):
     x = layer_dict[list(layer_dict.keys())[-1]].output 
     GAP = layers.GlobalAveragePooling2D()(x)
     Flatten = layers.Flatten()(GAP)
-    Output = layers.Dense(classes, activation='softmax')(GAP)
+    Output = layers.Dense(classes, activation='softmax')(Flatten)
 
     model = keras.Model(inputs = base_model.input, outputs =  Output)
 

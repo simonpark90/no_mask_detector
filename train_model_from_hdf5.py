@@ -12,7 +12,8 @@ from tensorflow.keras import models
 from tensorflow.keras.callbacks import EarlyStopping as es, ModelCheckpoint as cp
 from tensorflow.keras import optimizers
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from sklearn.model_selection import train_test_split
+from sklearn import metrics
+from keras.utils.io_utils import HDF5Matrix
 
 from random import shuffle
 from math import ceil
@@ -32,80 +33,38 @@ from matplotlib import pyplot as plt
 def train(inputs, classes, fine_tune_at):
    
     hdf5_path = './image.hdf5'
-    subtract_mean = False
     batch_size = 32
+    epochs =50000
 
+   
+    x_train = HDF5Matrix(hdf5_path, 'train_img')
+    X_train = np.array(x_train)
+    y_train = HDF5Matrix(hdf5_path, 'train_labels')
+    y_train = np.array(y_train)
 
-    hdf5_file = tables.open_file(hdf5_path, mode = 'r')
+    X_val = HDF5Matrix(hdf5_path, 'val_img')
+    X_val = np.array(X_val)
+    y_val = HDF5Matrix(hdf5_path, 'val_labels')
+    y_val = np.array(y_val)
 
-    if subtract_mean:
-        mm = hdf5_file.root.train_mean[0]
-        mm = mm[np.newaxis, ...]
-    data_num = hdf5_file.root.train_img.shape[0]
-
-    batch_list = list(range(int(ceil(float(data_num)/batch_size))))
-    shuffle(batch_list)
-
-    for n, i in enumerate(batch_list):
-        i_s = i * batch_size
-        i_e = min([i+1*batch_size,data_num])
-
-        images = hdf5_file.root.train_img[i_s:i_e]
-        if subtract_mean:
-            images -= mm
-
-        labels = hdf5_file.root.train_labels[i_s:i_e]
-        labels_one_hot = np.zeros((batch_size,nb_class))
-        labels_one_hot[np.arange(batch_size),labels] = 1
-
-        print(n+1,'/',len(batch_list))
-
-        print 
-    # train_datagen = ImageDataGenerator(
-    #     rescale = 1./225,
-    #     shear_range=0.2,
-    #     zoom_range=0.2,
-    #     horizontal_flip=False,
-    #     validation_split=0.2)
-    # test_datagen = ImageDataGenerator(rescale = 1./255)
-
-    # train_generator = train_datagen.flow_from_directory(
-    #     'data/train',
-    #     target_size = (224,224),
-    #     batch_size = batch_size,
-    #     class_mode = 'categorical',
-    #     subset = 'training'
-    # )
-    # validation_generator = train_datagen.flow_from_directory(
-    #     'data/train',
-    #     target_size = (224,224),
-    #     batch_size = batch_size,
-    #     class_mode = 'categorical',
-    #     subset = 'validation'
-    # )
-    # test_generator = test_datagen.flow_from_directory(
-    #     'data/test',
-    #     target_size = (224,224)
-    # )
+    X_test = HDF5Matrix(hdf5_path, 'test_img')
+    X_test = np.array(X_test)
+    y_test = HDF5Matrix(hdf5_path, 'test_labels')
+    y_test = np.array(y_test)
     
     model = make_model.create_model(inputs, classes, fine_tune_at)
 
-    model.compile(loss='binary_crossentropy',optimizer='Adam',metrics=['accuracy'])
+    model.compile(loss= 'binary_crossentropy', optimizer= 'Adam',metrics=[ 'accuracy'])
 
     modelpath="best_model_mask_classification.h5"
  
-    checkpointer = cp(filepath=modelpath, monitor='val_loss', verbose=1, save_best_only=True)
+    checkpointer = cp(filepath= modelpath, monitor= 'val_loss', verbose= 1, save_best_only= True)
     early_stopping_callback = es(monitor='val_loss', patience=50)
  
     # Learning and save models
-    history =  model.fit_generator(
-        train_generator,
-        steps_per_epoch = train_generator.samples // batch_size,
-        validation_data = validation_generator,
-        validation_steps = validation_generator.samples // batch_size,
-        epochs = 50000,
-        callbacks=[checkpointer, early_stopping_callback]
-    )
+    history =  model.fit(X_train, y_train, epochs= epochs, batch_size= batch_size,alidation_data= (X_val, y_val), shuffle= True, callback=[checkpointer, early_stopping_callback])
+ 
+
     plt.plot(history.history['acc'])
     plt.plot(history.history['val_acc'])
     plt.title('model accuracy')
@@ -123,7 +82,17 @@ def train(inputs, classes, fine_tune_at):
     plt.legend(['train', 'val'], loc='upper left')
     plt.savefig('loss.png')
     
-    probabilities = model.predict_generator(generator=test_generator)
+    pred = model.predict(X_test)
+    cm = metrics.confusion_matrix(y_test, pred)
+    plt.imshow(cm, cmap=plt.cm.Blues)
+    plt.xlabel("Predicted labels")
+    plt.ylabel("True labels")
+    plt.xticks([], [])
+    plt.yticks([], [])
+    plt.title('Confusion matrix ')
+    plt.colorbar()
+    plt.savefig('test_confusion_matrix.png')
+
 
 if __name__ == '__main__':
    train(inputs= (224,224,3), classes =2, fine_tune_at= -3)

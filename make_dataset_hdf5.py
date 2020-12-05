@@ -55,7 +55,7 @@ for i in range(len(train_addrs)):
     img = cv2.imread(addr)
     img = cv2.resize(img, (224, 224), interpolation=cv2.INTER_CUBIC)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-
+    img = cv2.normalize(img, None, 0, 1, cv2.NORM_MINMAX)
     train_storage.append(img[None])
     mean += img / float(len(train_labels))
 
@@ -67,6 +67,7 @@ for i in range(len(val_addrs)):
     img = cv2.imread(addr)
     img = cv2.resize(img, (224, 224), interpolation=cv2.INTER_CUBIC)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    img = cv2.normalize(img, None, 0, 1, cv2.NORM_MINMAX)
 
 
     val_storage.append(img[None])
@@ -79,7 +80,7 @@ for i in range(len(test_addrs)):
     img = cv2.imread(addr)
     img = cv2.resize(img, (224, 224), interpolation=cv2.INTER_CUBIC)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-
+    img = cv2.normalize(img, None, 0, 1, cv2.NORM_MINMAX)
 
     test_storage.append(img[None])
 
