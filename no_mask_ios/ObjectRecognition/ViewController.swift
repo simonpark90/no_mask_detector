@@ -9,6 +9,7 @@
 import UIKit
 import CoreVideo
 import AVFoundation
+import SwiftyJSON
 
 class ViewController: UIViewController {
 
@@ -24,8 +25,11 @@ class ViewController: UIViewController {
     let context = CIContext()
     let model = MobileNetV2()
     //    let model = Inceptionv3()
-    var gifStatus = false // 로딩 gif 호출 여부
     let loadingGif = UIImage.gifImageWithName("loadAnim") // 로딩 gif 파일
+    
+    var gifStatus = false // 로딩 gif 호출 여부
+    var ciImage = CIImage()
+    var responseData = Data()
         
     // 카메라를 초기화 한 후 세션에 할당
     override func viewDidLoad() {
@@ -178,8 +182,22 @@ class ViewController: UIViewController {
     
     // 마스크 미착용이 확인되었을 때
     func detectUnmaskFace() {
+        // 사용자 사진 전송
+        let uiImage = UIImage(ciImage: ciImage)
+        self.sendImage(image: uiImage)
+        
+        // 응답 처리
+        let json = JSON(responseData)
+        let result = json["result"].stringValue
+        var text = "마스크를 착용해주세요"
+        if result == "true" {
+            let userName = json["userName"].stringValue
+            let userCount = json["userCount"].stringValue
+            text = "\(userName)님 마스크를 착용해주세요\n누적벌점 \(userCount)점"
+        }
+
         // topStateView 세팅
-        topStateView.text = "마스크를 착용해주세요"
+        topStateView.text = text
         topStateView.textColor = UIColor.systemRed
         topStateView.centerVertically()
         
@@ -193,6 +211,41 @@ class ViewController: UIViewController {
             self.gifStatus = false
         }
         stateIcon.image = UIImage(named: "prohibition.png")
+    }
+    
+    // 이미지 POST 방식 전송
+    func sendImage(image: UIImage) {
+        let jpgData = image.jpegData(compressionQuality: 1.0)
+        let url = URL(string: "http://54.180.165.95:3000/send")!
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("image/jpeg", forHTTPHeaderField: "Content-Type")
+        request.setValue(formatter.string(from: Date()), forHTTPHeaderField: "Date")
+                                 
+        let task = URLSession.shared.uploadTask(with: request, from: jpgData) { data, response, error in
+            if let error = error {
+                print ("이미지 전송 에러 : \(error)")
+                return
+            }
+            
+            guard let response = response as? HTTPURLResponse,
+                (200...299).contains(response.statusCode) else {
+                print ("이미지 전송 서버 에러")
+                return
+            }
+            
+            if let mimeType = response.mimeType,
+                mimeType == "image/jpeg",
+                let data = data,
+                let dataString = String(data: data, encoding: .utf8) {
+                print ("응답 결과 : \(dataString)")
+                self.responseData = data
+            }
+        }
+        task.resume()
     }
     
     func get() {
@@ -217,17 +270,18 @@ extension ViewController : VideoCaptureDelegate{
                          timestamp:CMTime){
         guard let pixelBuffer = pixelBuffer else {return}
         
-        guard let scaledPixelBuffer = CIImage(cvImageBuffer: pixelBuffer).resize(size: CGSize(width: 224, height: 224)).toPixelBuffer(context: context) else{return}
+        ciImage = CIImage(cvImageBuffer: pixelBuffer)
+        guard let scaledPixelBuffer = ciImage.resize(size: CGSize(width: 224, height: 224)).toPixelBuffer(context: context) else{return}
         //print(scaledPixelBuffer)
-
+        
         let prediction = try? self.model.prediction(image: scaledPixelBuffer)
         
         DispatchQueue.main.sync {
             classifiedLabel.text = prediction?.classLabel ?? "사물을 인식해주세요"
             //self.tryClassifyMask(text: prediction?.classLabel ?? "not detected")
-            // self.tryClassifyMask(text: "not wearing a mask")
+            self.tryClassifyMask(text: "not wearing a mask")
             // self.tryClassifyMask(text: "wearing a mask")
-            self.tryClassifyMask(text: "default state")
+            // self.tryClassifyMask(text: "default state")
             // print(classifiedLabel ?? "8j")
         }
         
