@@ -2,12 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/parkjoohyun/git/mask_deeplearning/no_mask_ios/ObjectRecognition/SwiftyJSON.swift">
-   </FileRef>
-   <FileRef
-      location = "group:/Users/parkjoohyun/git/mask_deeplearning/no_mask_ios/ObjectRecognition/gifs/loadAnim.gif">
-   </FileRef>
-   <FileRef
       location = "self:">
    </FileRef>
 </Workspace>
