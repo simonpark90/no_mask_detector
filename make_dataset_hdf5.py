@@ -10,8 +10,8 @@ hdf5_path = './image.hdf5'
 data_path = './data/*/*/*/*.jpg'
 
 addrs = glob.glob(data_path)
-
-labels = [0 if 'YES' in addr else 1 for addr in addrs]
+classes = ['YES','NO']
+labels = [[0,1] if 'YES' in addr else [1,0] for addr in addrs]
 
 if shuffle_data:
     c = list(zip(addrs, labels))
