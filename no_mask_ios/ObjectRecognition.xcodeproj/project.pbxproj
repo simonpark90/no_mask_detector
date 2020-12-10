@@ -40,8 +40,8 @@
 		84CD691B1FE688EA00C5B7EC /* VideoCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCapture.swift; sourceTree = "<group>"; };
 		84CD691D1FE6892200C5B7EC /* CaptureVideoPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureVideoPreviewView.swift; sourceTree = "<group>"; };
 		84CD691F1FE6893A00C5B7EC /* CIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIImage.swift; sourceTree = "<group>"; };
-		D743776A2578EF57009BAB47 /* iOSDevCenters+GIF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "iOSDevCenters+GIF.swift"; path = "/Users/parkjoohyun/git/mask_deeplearning/no_mask_ios/ObjectRecognition/font/iOSDevCenters+GIF.swift"; sourceTree = "<absolute>"; };
-		D74A440925735BEF00FD6C76 /* MobileNetV2.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = MobileNetV2.mlmodel; path = ../../../../Downloads/MobileNetV2.mlmodel; sourceTree = "<group>"; };
+		D743776A2578EF57009BAB47 /* iOSDevCenters+GIF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "iOSDevCenters+GIF.swift"; path = "/Users/parkjoohyun/git/mask_deeplearning/no_mask_ios/ObjectRecognition/iOSDevCenters+GIF.swift"; sourceTree = "<absolute>"; };
+		D74A440925735BEF00FD6C76 /* MobileNetV2.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = MobileNetV2.mlmodel; sourceTree = "<group>"; };
 		D74A441025735F8A00FD6C76 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		D74A442F25776AA000FD6C76 /* NanumSquareEB.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareEB.otf; sourceTree = "<group>"; };
 		D7E779652579261C00C6B7FE /* loadAnim.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = loadAnim.gif; path = /Users/parkjoohyun/git/mask_deeplearning/no_mask_ios/ObjectRecognition/gifs/loadAnim.gif; sourceTree = "<absolute>"; };
