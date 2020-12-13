@@ -1,0 +1,6 @@
+npm install react-admin
+npm create react-app Project명
+cd Project명/
+npm add react-admin ra-data-json-server prop-types
+이후 Project명 폴더 내부 src를 깃에 있는 admin 내부 src파일로 바꿔준다
+npm start

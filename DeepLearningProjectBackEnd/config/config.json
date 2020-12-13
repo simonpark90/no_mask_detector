@@ -1,0 +1,11 @@
+{
+  "development": {
+    "username": "admin",
+    "password": "playdata",
+    "database": "mydb",
+    "host": "mydbinstance.cnpgx1lg914r.ap-northeast-2.rds.amazonaws.com",
+    "dialect": "mysql",
+    "timezone": "+09:00",
+    "port": 3306
+  }
+}

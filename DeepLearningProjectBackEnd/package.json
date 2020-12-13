@@ -1,0 +1,37 @@
+{
+  "name": "deeplearningprojectbackend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "dependencies": {
+    "aws-sdk": "^2.807.0",
+    "canvas": "^2.6.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "face-api.js": "^0.22.2",
+    "get-random-values": "^1.2.2",
+    "mime": "^2.4.6",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.2",
+    "mysql2": "^2.2.5",
+    "nodemon": "^2.0.6",
+    "nunjucks": "^3.2.2",
+    "sequelize-cli": "^6.2.0",
+    "sequelize": "^6.3.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/byungs2/DeepLearningProjectBackEnd.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/byungs2/DeepLearningProjectBackEnd/issues"
+  },
+  "homepage": "https://github.com/byungs2/DeepLearningProjectBackEnd#readme"
+}

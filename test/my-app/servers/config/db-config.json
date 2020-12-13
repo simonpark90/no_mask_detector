@@ -1,0 +1,7 @@
+{
+	"host"			: "ec2-54-180-165-95.ap-northeast-2.compute.amazonaws.com",
+	"user"			: "admin",
+	"password"		: "12345678",
+	"database"		: "mydb",
+	"port"			: 3306
+}
