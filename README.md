@@ -11,7 +11,7 @@
 #### • 🧑🏻‍박성우(팀장 및 ML & Frontend) : 딥러닝 모델 개발, 앱 개발, 프로젝트 관리
 #### • 👩🏻‍🦰 박채연(Frontend) : Admin 페이지 개발, 웹과 서버 통신(Nodejs), Backend 개발(Node.js express, sequelize)
 #### • 🧑🏻‍이병헌(Frontend) : Admin 페이지 개발, 웹과 서버 통신(Nodejs), Backend 개발(Node.js express, sequelize), Face Identification 개발
-#### • 👩🏻 박주현(Backend) : AWS 서버 구축, DB 구축
+#### • 👩🏻 박주현(Backend) : AWS 서버 구축, DB 구축, iOS 앱 개발
 #### • 👩🏻 남기은(Backend) : Face Identification 개발
 <br>
 
