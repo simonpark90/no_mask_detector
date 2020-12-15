@@ -137,7 +137,7 @@ extension VideoCapture : AVCaptureVideoDataOutputSampleBufferDelegate{
 
         // Throttle capture rate based on assigned fps
         let elapsedTime = timestamp - lastTimestamp
-        if elapsedTime >= CMTimeMake(value: 1, timescale: Int32(fps)) {
+        if elapsedTime >= CMTimeMake(value: 45, timescale: Int32(fps)) {
             // update timestamp
             lastTimestamp = timestamp
             // get sample buffer's CVImageBuffer

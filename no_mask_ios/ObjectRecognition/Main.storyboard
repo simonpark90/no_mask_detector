@@ -34,10 +34,12 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zRz-BD-Szv">
-                                        <rect key="frame" x="144" y="438" width="124" height="50"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zRz-BD-Szv">
+                                        <rect key="frame" x="145" y="434" width="124" height="47"/>
                                         <color key="backgroundColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="47" id="NpS-H1-UlB"/>
+                                        </constraints>
                                         <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal">
                                             <attributedString key="attributedTitle">
@@ -58,6 +60,11 @@
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="zRz-BD-Szv" secondAttribute="bottom" constant="8" id="6lz-XM-BAe"/>
+                                    <constraint firstItem="zRz-BD-Szv" firstAttribute="leading" secondItem="QkB-Ki-6nP" secondAttribute="leading" constant="145" id="MdI-9T-NN7"/>
+                                    <constraint firstAttribute="trailing" secondItem="zRz-BD-Szv" secondAttribute="trailing" constant="145" id="tpc-NV-qXR"/>
+                                </constraints>
                             </view>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="center" usesAttributedText="YES" allowsEditingTextAttributes="YES" id="YUA-pc-PMj">
                                 <rect key="frame" x="0.0" y="62" width="414" height="95"/>
@@ -100,7 +107,6 @@
                             <constraint firstItem="KkB-7f-3UF" firstAttribute="top" secondItem="QkB-Ki-6nP" secondAttribute="bottom" constant="50" id="7oE-f1-XWr"/>
                             <constraint firstItem="7Mc-8q-xuC" firstAttribute="top" secondItem="KkB-7f-3UF" secondAttribute="bottom" constant="10" id="BH8-0L-YG0"/>
                             <constraint firstItem="QkB-Ki-6nP" firstAttribute="leading" secondItem="YUA-pc-PMj" secondAttribute="leading" id="Bzl-jQ-62i"/>
-                            <constraint firstItem="YUA-pc-PMj" firstAttribute="top" secondItem="cZl-Il-egs" secondAttribute="top" constant="18" id="Dnr-Bt-bME"/>
                             <constraint firstItem="QkB-Ki-6nP" firstAttribute="top" secondItem="pH9-pZ-VZP" secondAttribute="top" constant="178" id="OQ0-Bm-JzU"/>
                             <constraint firstItem="QkB-Ki-6nP" firstAttribute="leading" secondItem="pH9-pZ-VZP" secondAttribute="leading" id="Q5d-T9-wnY"/>
                             <constraint firstItem="7Mc-8q-xuC" firstAttribute="centerX" secondItem="QkB-Ki-6nP" secondAttribute="centerX" id="RGq-nx-EL3"/>
