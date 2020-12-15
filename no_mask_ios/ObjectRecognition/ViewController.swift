@@ -8,9 +8,11 @@
 
 import UIKit
 import CoreVideo
+import CoreImage
 import AVFoundation
 import SwiftyJSON
 import AudioToolbox
+import NVActivityIndicatorView
 
 class ViewController: UIViewController {
 
@@ -26,7 +28,10 @@ class ViewController: UIViewController {
     let context = CIContext()
     let model = MobileNetV2()
     //    let model = Inceptionv3()
-    let loadingGif = UIImage.gifImageWithName("loadAnim") // 로딩 gif 파일
+    let loading = NVActivityIndicatorView(frame: CGRect(x: 168.0, y: 717.0, width: 82, height: 82),
+                                            type: .ballRotateChase,
+                                            color: .black,
+                                            padding: 0) // 로딩 아이콘
     
     var gifStatus = false // 로딩 gif 호출 여부
     var ciImage = CIImage() // 캡쳐 이미지
@@ -42,6 +47,7 @@ class ViewController: UIViewController {
         self.get()
         self.setFonts()
         self.setButton()
+        self.view.addSubview(loading)
         self.videoCapture.delegate = self
         self.gifStatus = false
         
@@ -96,19 +102,44 @@ class ViewController: UIViewController {
     }
     
     /**
+     사람 얼굴 인식
+     */
+    func checkFaceDetection(image: CIImage) -> Bool {
+        var isFace = false
+        let accuracy = [CIDetectorAccuracy: CIDetectorAccuracyHigh]
+        let faceDetector = CIDetector(ofType: CIDetectorTypeFace, context: nil, options: accuracy)
+        let faces = faceDetector?.features(in: image)
+
+        if let face = faces?.first as? CIFaceFeature {
+            print("Found face at \(face.bounds)")
+            if face.hasLeftEyePosition && face.hasRightEyePosition && face.hasMouthPosition && face.hasFaceAngle{
+                isFace = true
+            }else{
+                isFace = false
+            }
+        }
+        return isFace
+    }
+    
+    /**
      마스크 착용 판별
      */
     func tryClassifyMask(text: String) {
-        switch text {
-        case "wearing a mask":
-            print("마스크 착용")
-            self.detectMaskFace()
-        case "not wearing a mask":
-            print("마스크 미착용")
-            self.detectUnmaskFace()
-        default:
-            print("얼굴 감지중")
+        // 사람얼굴이 있을때만 판별
+        if checkFaceDetection(image: ciImage) == false {
             self.mainScreen()
+        } else {
+            switch text {
+            case "wearing a mask":
+                print("마스크 착용")
+                self.detectMaskFace()
+            case "not wearing a mask":
+                print("마스크 미착용")
+                self.detectUnmaskFace()
+            default:
+                print("얼굴 감지중")
+                self.mainScreen()
+            }
         }
     }
     
@@ -124,11 +155,10 @@ class ViewController: UIViewController {
         bottomStateView.text = "잠시만 기다려 주세요"
         bottomStateView.textColor = UIColor.black
         
-        // Icon 세팅 : Default 화면에서 최초 1번만 로딩화면 띄움
+        // Icon 세팅 : Default 화면에서 최초 1번만 로딩아이콘 띄움
         if self.gifStatus == false {
-            let stateIcon = UIImageView(image: loadingGif)
-            stateIcon.frame = CGRect(x: 168.0, y: 717.0, width: 82, height: 82)
-            view.addSubview(stateIcon)
+            stateIcon.image = UIImage()
+            loading.startAnimating()
             self.gifStatus = true
         }
     }
@@ -148,9 +178,9 @@ class ViewController: UIViewController {
         bottomStateView.text = "감사합니다"
         bottomStateView.textColor = customGreen
         
-        // Icon 세팅 : loading gif 제거
+        // Icon 세팅 : loading 아이콘 제거
         if gifStatus == true {
-            stateIcon.removeFromSuperview()
+            loading.stopAnimating()
             self.gifStatus = false
         }
         stateIcon.image = UIImage(named: "checked.png")
@@ -158,12 +188,6 @@ class ViewController: UIViewController {
         // 통과 사운드 재생
         self.playAudio(filename: "pass")
         
-        // 1초동안 일시중지
-        self.videoCapture.asyncStopCapturing()
-        let time = DispatchTime.now() + .seconds(1)
-        DispatchQueue.main.asyncAfter(deadline: time) {
-            self.videoCapture.asyncStartCapturing()
-        }
     }
     
     /**
@@ -171,13 +195,14 @@ class ViewController: UIViewController {
      */
     func detectUnmaskFace() {
         // 사용자 사진 서버로 전송
+        bottomStateView.text = "인식중..."
         let uiImage = UIImage(ciImage: ciImage)
         self.sendImage(image: uiImage)
         
         // 서버 응답 처리
         let json = JSON(responseData)
 //        let result = json["result"].stringValue
-        let result = "true"
+        let result = "false"
         var text = "마스크를 착용해주세요"
         
         // 누군지 인식 되었을 경우 이름과 벌점 저장 후 topStateView에 띄움
@@ -196,9 +221,9 @@ class ViewController: UIViewController {
         bottomStateView.text = "입장 불가"
         bottomStateView.textColor = UIColor.systemRed
         
-        // Icon 세팅 : loading gif 제거
+        // Icon 세팅 : loading 아이콘 제거
         if gifStatus == true {
-            stateIcon.removeFromSuperview()
+            loading.stopAnimating()
             self.gifStatus = false
         }
         stateIcon.image = UIImage(named: "prohibition.png")
@@ -206,14 +231,6 @@ class ViewController: UIViewController {
         // 경고 사운드 재생
         self.playAudio(filename: "alart")
         
-        // 누군지 인식됐을 경우 3초간 캡쳐 중지
-        if result == "true" {
-            self.videoCapture.asyncStopCapturing()
-            let time = DispatchTime.now() + .seconds(3)
-            DispatchQueue.main.asyncAfter(deadline: time) {
-                self.videoCapture.asyncStartCapturing()
-            }
-        }
     }
     
     /**
@@ -350,8 +367,8 @@ extension ViewController : VideoCaptureDelegate{
         DispatchQueue.main.sync {
             classifiedLabel.text = prediction?.classLabel ?? "사물을 인식해주세요"
             //self.tryClassifyMask(text: prediction?.classLabel ?? "not detected")
-//            self.tryClassifyMask(text: "not wearing a mask")
-            self.tryClassifyMask(text: "wearing a mask")
+            self.tryClassifyMask(text: "not wearing a mask")
+//            self.tryClassifyMask(text: "wearing a mask")
             // self.tryClassifyMask(text: "default state")
             // print(classifiedLabel ?? "8j")
             
