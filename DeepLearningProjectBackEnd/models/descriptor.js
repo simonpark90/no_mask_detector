@@ -24,7 +24,7 @@ class Descriptor extends Sequelize.Model {
         });
     }
     static associate(db) {
-
+	db.Descriptor.belongsTo(db.Member);
     }
 };
 

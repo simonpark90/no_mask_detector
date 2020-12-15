@@ -170,10 +170,18 @@ app.get('/member/faceImages/:imageName', async (req, res) => {
 app.get('/member', async (req,res) => {
     try {
         const members = await Member.findAll();
+	const partOfMembers = members.slice(req.query._start,req.query._end);
+	partOfMembers.sort(function(a,b){
+		if(req.query._order === 'ASC'){
+			return a.id < b.id ? -1 : a.id > b.id ? 1 : 0;
+		}else if(req.query._order === 'DESC'){
+			return a.id > b.id ? -1 : a.id < b.id ? 1 : 0;
+		}
+	});
         //Header Setting
         res.setHeader('Access-Control-Expose-Headers','X-Total-Count');
         res.setHeader('X-Total-Count',members.length);
-        res.json(members);
+        res.json(partOfMembers);
     } catch (error) {
         console.log(error);
     }
@@ -192,19 +200,18 @@ app.post('/member',upload.single('memberFace'),async (req,res) => {
                     memberCount : 0,
                     memberFace : urlPath,
                 });
-
-                const members = await Member.findOne({where : { memberFace : urlPath}});
                 const labeledDesc = [];
-                const idx = members.memberFace.indexOf('faceImage');
-                const imagePath = members.memberFace.substring(idx);
+                const idx = member.memberFace.indexOf('faceImage');
+                const imagePath = member.memberFace.substring(idx);
                 const data = await canvas.loadImage('./' + imagePath);
                 const singleFaceDesc = await faceapi.detectSingleFace(data).withFaceLandmarks().withFaceDescriptor();
-                const desc = new faceapi.LabeledFaceDescriptors(members.memberName, [singleFaceDesc.descriptor]);
+                const desc = new faceapi.LabeledFaceDescriptors(member.memberName, [singleFaceDesc.descriptor]);
                 labeledDesc.push(desc);
 
                 const strDesc = JSON.stringify(labeledDesc);
                 await Descriptor.create({
-                    desc : strDesc
+                    desc : strDesc,
+		    MemberId : member.id
                 })
 
                 res.status(201).json(member);
@@ -214,19 +221,18 @@ app.post('/member',upload.single('memberFace'),async (req,res) => {
                     memberCount : req.body.memberCount,
                     memberFace : urlPath,
                 });
-
-                const members = await Member.findOne({where : { memberFace : urlPath}});
                 const labeledDesc = [];
-                const idx = members.memberFace.indexOf('faceImage');
-                const imagePath = members.memberFace.substring(idx);
+                const idx = member.memberFace.indexOf('faceImage');
+                const imagePath = member.memberFace.substring(idx);
                 const data = await canvas.loadImage('./' + imagePath);
                 const singleFaceDesc = await faceapi.detectSingleFace(data).withFaceLandmarks().withFaceDescriptor();
-                const desc = new faceapi.LabeledFaceDescriptors(members.memberName, [singleFaceDesc.descriptor]);
+                const desc = new faceapi.LabeledFaceDescriptors(member.memberName, [singleFaceDesc.descriptor]);
                 labeledDesc.push(desc);
 
                 const strDesc = JSON.stringify(labeledDesc);
                 await Descriptor.create({
-                    desc : strDesc
+                    desc : strDesc,
+		    MemberId : member.id
                 })
 
                 res.status(201).json(member);
@@ -253,7 +259,7 @@ app.put('/member/:memberId',upload.single('updateMemberFace') ,async (req,res) =
         const desc = descriptor.desc.replace(member.memberName, req.body.memberName);
         await Descriptor.update({
             desc : desc
-        },{where : { id : memberId}});
+        },{where : { MemberId : memberId}});
         const updatedMember = await Member.findByPk(memberId);
         res.status(201).json(updatedMember);
     }else{
@@ -289,7 +295,7 @@ app.put('/member/:memberId',upload.single('updateMemberFace') ,async (req,res) =
             const strDesc = JSON.stringify(labeledDesc);
             await Descriptor.update({
                 desc : strDesc
-            },{where : { id : memberId}});
+            },{where : { MemberId : memberId}});
             
             res.json(updatedMember);
         } catch (err) {
@@ -312,8 +318,8 @@ app.delete('/member/:memberId', async (req, res) => {
                 console.log("===== delete image complete =====");
             }
         })
+	await Descriptor.destroy({where : { MemberId : memberId}});
         const result = await Member.destroy({where : { id : memberId}});
-        await Descriptor.destroy({where : { id : memberId}});
         res.json(result);
     } catch (error) {
         console.log(error);
@@ -338,10 +344,18 @@ app.get('/member/:memberId', async (req, res) => {
 app.get('/state', async (req,res) => {
     try {
         const states = await State.findAll();
+	const partOfStates = states.slice(req.query._start,req.query._end);
+	partOfStates.sort(function(a,b){
+		if(req.query._order === 'ASC'){
+			return a.id < b.id ? -1 : a.id > b.id ? 1 : 0;
+		}else if(req.query._order === 'DESC'){
+			return a.id > b.id ? -1 : a.id < b.id ? 1 : 0;
+		}
+	});
         //Header Setting
         res.setHeader('Access-Control-Expose-Headers','X-Total-Count');
         res.setHeader('X-Total-Count',states.length);
-        res.json(states);
+        res.json(partOfStates);
     } catch (error) {
         console.log(error);
     }
@@ -422,10 +436,18 @@ app.get('/state/:stateId', async (req, res) => {
 app.get('/admin', async (req,res) => {
     try {
         const admins = await Admin.findAll();
+	const partOfAdmins = admins.slice(req.query._start,req.query._end);
+	partOfAdmins.sort(function(a,b){
+		if(req.query._order === 'ASC'){
+			return a.id < b.id ? -1 : a.id > b.id ? 1 : 0;
+		}else if(req.query._order === 'DESC'){
+			return a.id > b.id ? -1 : a.id < b.id ? 1 : 0;
+		}
+	});
         //Header Setting
         res.setHeader('Access-Control-Expose-Headers','X-Total-Count');
         res.setHeader('X-Total-Count',admins.length);
-        res.json(admins);
+        res.json(partOfAdmins);
     } catch (error) {
         console.log(error);
     }
