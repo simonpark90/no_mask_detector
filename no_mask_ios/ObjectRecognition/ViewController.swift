@@ -17,8 +17,6 @@ import NVActivityIndicatorView
 class ViewController: UIViewController {
 
     @IBOutlet var previewView:CapturePreviewView!
-    @IBOutlet var classifiedLabel:UILabel!
-    @IBOutlet var adminList:UITextView!
     @IBOutlet var topStateView:UITextView!
     @IBOutlet var bottomStateView:UILabel!
     @IBOutlet var stateIcon:UIImageView!
@@ -26,8 +24,9 @@ class ViewController: UIViewController {
     
     let videoCapture : VideoCapture = VideoCapture()
     let context = CIContext()
-    let model = MobileNetV2()
-    //    let model = Inceptionv3()
+    let model = rgb_MaskModel()
+//    let model = MobileNetV2()
+//         let model = Inceptionv3()
     let loading = NVActivityIndicatorView(frame: CGRect(x: 168.0, y: 717.0, width: 82, height: 82),
                                             type: .ballRotateChase,
                                             color: .black,
@@ -37,6 +36,7 @@ class ViewController: UIViewController {
     var ciImage = CIImage() // 캡쳐 이미지
     var responseData = Data() // 서버 응답 데이터
     var soundEffect: AVAudioPlayer? // 오디오 플레이어
+    var spinner = UIActivityIndicatorView(style: .large)
         
     /**
      카메라를 초기화 한 후 세션에 할당
@@ -44,10 +44,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        self.get()
         self.setFonts()
         self.setButton()
-        self.view.addSubview(loading)
+        self.view.addSubview(loading) // 로딩 아이콘 준비
         self.videoCapture.delegate = self
         self.gifStatus = false
         
@@ -122,6 +121,43 @@ class ViewController: UIViewController {
     }
     
     /**
+     서버에 request를 보내면 로딩 화면 시작
+     */
+    func startWaitForServer() -> UIViewController {
+        let child = WaitServerViewController()
+
+        addChild(child)
+        child.view.frame = view.frame
+        view.addSubview(child.view)
+        child.didMove(toParent: self)
+        
+        return child
+    }
+    
+    /**
+     캡쳐를 다시 시작하기 전까지 대기
+     */
+    func startWaitForCapture() -> UIViewController {
+        let child = WaitCaptureViewController()
+
+        addChild(child)
+        child.view.frame = view.frame
+        view.addSubview(child.view)
+        child.didMove(toParent: self)
+        
+        return child
+    }
+    
+    /**
+     로딩 화면 제거
+     */
+    func endWaiting(child: UIViewController) {
+        child.willMove(toParent: nil)
+        child.view.removeFromSuperview()
+        child.removeFromParent()
+    }
+    
+    /**
      마스크 착용 판별
      */
     func tryClassifyMask(text: String) {
@@ -130,10 +166,10 @@ class ViewController: UIViewController {
             self.mainScreen()
         } else {
             switch text {
-            case "wearing a mask":
+            case "correct":
                 print("마스크 착용")
                 self.detectMaskFace()
-            case "not wearing a mask":
+            case "incorrect":
                 print("마스크 미착용")
                 self.detectUnmaskFace()
             default:
@@ -194,21 +230,27 @@ class ViewController: UIViewController {
      마스크 미착용이 확인되었을 때
      */
     func detectUnmaskFace() {
+        
+        self.videoCapture.captureSession.stopRunning() // 카메라 일시 중지
+        let waitingServer = startWaitForServer() // 로딩 화면 띄우기
+        self.playAudio(filename: "loading") // 로딩 사운드 재생
+        
         // 사용자 사진 서버로 전송
-        bottomStateView.text = "인식중..."
         let uiImage = UIImage(ciImage: ciImage)
         self.sendImage(image: uiImage)
         
+        endWaiting(child: waitingServer) // 로딩 화면 제거
+        
         // 서버 응답 처리
         let json = JSON(responseData)
-//        let result = json["result"].stringValue
-        let result = "false"
+        let result = json["result"].stringValue
+//        let result = "false"
         var text = "마스크를 착용해주세요"
         
         // 누군지 인식 되었을 경우 이름과 벌점 저장 후 topStateView에 띄움
         if result == "true" {
-            let userName = json["userName"].stringValue
-            let userCount = json["userCount"].stringValue
+            let userName = json["username"].stringValue
+            let userCount = json["count"].stringValue
             text = "\(userName)님 마스크를 착용해주세요\n누적벌점 \(userCount)점"
         }
 
@@ -231,6 +273,13 @@ class ViewController: UIViewController {
         // 경고 사운드 재생
         self.playAudio(filename: "alart")
         
+        // 5초동안 일시 중지
+        let time = DispatchTime.now() + .seconds(5)
+        let waitingCapture = startWaitForCapture()
+        DispatchQueue.main.asyncAfter(deadline: time) {
+            self.endWaiting(child: waitingCapture)
+            self.videoCapture.captureSession.startRunning()
+        }
     }
     
     /**
@@ -255,28 +304,62 @@ class ViewController: UIViewController {
      */
     @IBAction func onClick(sender: AnyObject) {
         print("버튼 클릭")
+        var alertTitle = "에러 발생"
+        var alertMessage = "관리자 호출에 실패하였습니다"
+        var done = false // 동기 제어
+        var response = "false"
+        
+        self.playAudio(filename: "buttonPush") // 버튼 클릭 효과음 재생
+        self.videoCapture.captureSession.stopRunning() // 카메라 일시 중지
         
         // 관리자 호출 실행 확인 팝업 생성
         let adminCallAlert = UIAlertController(title: "알림", message: "관리자를 호출하시겠습니까?", preferredStyle: UIAlertController.Style.alert)
-        
+       
+        // "네" 버튼을 누를시 관리자 호출 시도
         adminCallAlert.addAction(UIAlertAction(title: "네", style: UIAlertAction.Style.destructive, handler: { action in
             
-            let response = self.sendCallAdminSign() // "네" 버튼을 누를시 실행
-            var alertTitle = "에러 발생"
-            var alertMessage = "관리자 호출에 실패하였습니다"
+            self.playAudio(filename: "buttonPush") // 버튼 클릭 효과음 재생
             
+            // 관리자 호출 요청을 서버에 보내고 응답이 올때까지 대기 (동기)
+            DispatchQueue.global().sync {
+                response = self.sendCallAdminSign()
+            }
+                        
+            // 관리자 호출이 정상적으로 이루어졌을 경우
             if response == "true" {
                 alertTitle = "관리자 호출 완료"
                 alertMessage = "잠시만 기다려주세요"
             }
             
+            // 관리자 호출 결과를 팝업으로 보여줌
             let resGetAlert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: UIAlertController.Style.alert)
-            resGetAlert.addAction(UIAlertAction(title: "확인", style: UIAlertAction.Style.cancel, handler: nil))
+            resGetAlert.addAction(UIAlertAction(title: "확인", style: UIAlertAction.Style.cancel, handler: { action in
+                self.playAudio(filename: "buttonPush") // 버튼 클릭 효과음 재생
+                done = true
+            }))
             self.present(resGetAlert, animated: true, completion: nil)
         }))
         
-        adminCallAlert.addAction(UIAlertAction(title: "아니오", style: UIAlertAction.Style.cancel, handler: nil))
+        // 관리자 호출 취소 버튼 누르면 팝업 사라짐
+        adminCallAlert.addAction(UIAlertAction(title: "아니오", style: UIAlertAction.Style.cancel, handler: { action in
+            self.playAudio(filename: "buttonPush") // 버튼 클릭 효과음 재생
+            done = true
+        }))
         self.present(adminCallAlert, animated: true, completion: nil)
+        
+        // 통신이 끝나고 응답을 받기까지 기다림
+        repeat {
+               RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.1))
+        } while !done
+        
+        // 3초동안 일시 중지
+        let time = DispatchTime.now() + .seconds(3)
+        let waitingCapture = startWaitForCapture()
+        DispatchQueue.main.asyncAfter(deadline: time) {
+            self.endWaiting(child: waitingCapture)
+            self.videoCapture.captureSession.startRunning()
+        }
+
     }
     
     /**
@@ -284,15 +367,18 @@ class ViewController: UIViewController {
      return 값 : true, false
      */
     func sendCallAdminSign() -> String {
+        
         do {
-            let url = URL(string: "http://54.180.165.95:3000/call")
-            let response = try String(contentsOf: url!)
+            let url = URL(string: "http://54.180.165.95:8082/call")
+            let response = try String(contentsOf: url!, encoding: .utf8)
+            print("응답 결과 : " + response)
             return response
             
         } catch let e as NSError {
             print(e.localizedDescription)
             return "false"
         }
+        
     }
     
     /**
@@ -300,54 +386,69 @@ class ViewController: UIViewController {
      return 값 : JSON data
      */
     func sendImage(image: UIImage) {
-        let jpgData = image.jpegData(compressionQuality: 1.0)
-        let url = URL(string: "http://54.180.165.95:3000/send")!
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        
+        guard let jpgData = image.jpegData(compressionQuality: 1.0) else { return }
+        let url = URL(string: "http://54.180.165.95:8082/nomask")!
+        let boundary = "Boundary-\(UUID().uuidString)"
         var request = URLRequest(url: url)
+        var done = false // 동기 제어
+        
+        request.addValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
-        request.setValue("image/jpeg", forHTTPHeaderField: "Content-Type")
-        request.setValue(formatter.string(from: Date()), forHTTPHeaderField: "Date")
-                                 
-        let task = URLSession.shared.uploadTask(with: request, from: jpgData) { data, response, error in
+        request.httpBody = createBody(key: "tempFace",
+                                      boundary: boundary,
+                                      data: jpgData,
+                                      mimeType: "image/jpeg")
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
                 print ("이미지 전송 에러 : \(error)")
+                done = true
                 return
             }
             
             guard let response = response as? HTTPURLResponse,
                 (200...299).contains(response.statusCode) else {
                 print ("이미지 전송 서버 에러")
+                done = true
                 return
             }
             
-            if let mimeType = response.mimeType,
-                mimeType == "image/jpeg",
-                let data = data,
+            if let data = data,
                 let dataString = String(data: data, encoding: .utf8) {
                 print ("응답 결과 : \(dataString)")
                 self.responseData = data
+                done = true
             }
         }
+        
         task.resume()
+        
+        // 통신이 끝나고 응답을 받기까지 기다림
+        repeat {
+               RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.1))
+        } while !done
     }
     
     /**
-     test
+     이미지 POST 방식으로 전송 시 request body 생성
      */
-    func get() {
-        do {
-            // URL 설정 GET 방식으로 호출
-            let url = URL(string: "http://54.180.165.95:3000/list")
-            let response = try String(contentsOf: url!)
-            
-            // 읽어온 값을 레이블에 표시
-            self.adminList.text = response
-        } catch let e as NSError {
-            print(e.localizedDescription)
-        }
+    private func createBody(key: String,
+                            boundary: String,
+                            data: Data,
+                            mimeType: String) -> Data {
+        var body = Data()
+        let boundaryPrefix = "\r\n--\(boundary)\r\n"
+        
+        body.append(boundaryPrefix.data(using: .utf8)!)
+        body.append("Content-Disposition: form-data; name=\"\(key)\"; filename=\"image.jpg\"\r\n".data(using: .utf8)!)
+        body.append("Content-Type: \(mimeType)\r\n\r\n".data(using: .utf8)!)
+        body.append(data)
+        body.append("\r\n".data(using: .utf8)!)
+        body.append("--".appending(boundary.appending("--")).data(using: .utf8)!)
+                    
+        return body as Data
     }
+
 }
 // MARK: - VideoCaptureDelegate
 
@@ -362,15 +463,16 @@ extension ViewController : VideoCaptureDelegate{
         guard let scaledPixelBuffer = ciImage.resize(size: CGSize(width: 224, height: 224)).toPixelBuffer(context: context) else{return}
         //print(scaledPixelBuffer)
         
-        let prediction = try? self.model.prediction(image: scaledPixelBuffer)
+        let prediction = try? self.model.prediction(input_1: scaledPixelBuffer)
         
         DispatchQueue.main.sync {
-            classifiedLabel.text = prediction?.classLabel ?? "사물을 인식해주세요"
-            //self.tryClassifyMask(text: prediction?.classLabel ?? "not detected")
-            self.tryClassifyMask(text: "not wearing a mask")
+//            classifiedLabel.text = prediction?.classLabel ?? "사물을 인식해주세요"
+            print(prediction?.classLabel)
+            self.tryClassifyMask(text: prediction?.classLabel ?? "not detected")
+//            self.tryClassifyMask(text: "not wearing a mask")
 //            self.tryClassifyMask(text: "wearing a mask")
             // self.tryClassifyMask(text: "default state")
-            // print(classifiedLabel ?? "8j")
+//             print(classifiedLabel ?? "8j")
             
         }
         
