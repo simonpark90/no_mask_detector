@@ -24,7 +24,7 @@ class ViewController: UIViewController {
     
     let videoCapture : VideoCapture = VideoCapture()
     let context = CIContext()
-    let model = rgb_MaskModel()
+    let model = model_12_19_1220()
 //    let model = MobileNetV2()
 //         let model = Inceptionv3()
     let loading = NVActivityIndicatorView(frame: CGRect(x: 168.0, y: 717.0, width: 82, height: 82),

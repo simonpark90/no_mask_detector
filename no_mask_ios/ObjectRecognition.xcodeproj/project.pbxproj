@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		680BD245258F0B870045C936 /* model_12_19_1220.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 680BD244258F0B870045C936 /* model_12_19_1220.mlmodel */; };
 		8404AC0B20A248AE00E1DAEA /* CoreML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8404AC0A20A248AE00E1DAEA /* CoreML.framework */; };
 		8404AC0D20A248B400E1DAEA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8404AC0C20A248B400E1DAEA /* AVFoundation.framework */; };
 		84CD690A1FE5472200C5B7EC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CD69091FE5472200C5B7EC /* AppDelegate.swift */; };
@@ -26,7 +27,6 @@
 		D7716E34258B05FA00F328E7 /* buttonPush.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D7716E33258B05F900F328E7 /* buttonPush.mp3 */; };
 		D7716E3F258B070700F328E7 /* loading.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D7716E3E258B070700F328E7 /* loading.mp3 */; };
 		D7716E42258B0DE500F328E7 /* WaitCaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7716E41258B0DE500F328E7 /* WaitCaptureViewController.swift */; };
-		D7716E46258B3FCE00F328E7 /* rgb_MaskModel.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = D7716E45258B3FCE00F328E7 /* rgb_MaskModel.mlmodel */; };
 		D7E7796F257B44F200C6B7FE /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = D7E7796E257B44F200C6B7FE /* SwiftyJSON */; };
 		D7E7797C257F25EF00C6B7FE /* alart.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D7E7797B257F25EF00C6B7FE /* alart.mp3 */; };
 		D7E7797F257F277600C6B7FE /* pass.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D7E7797E257F277600C6B7FE /* pass.mp3 */; };
@@ -35,6 +35,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		680BD244258F0B870045C936 /* model_12_19_1220.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = model_12_19_1220.mlmodel; sourceTree = "<group>"; };
 		8404AC0820A248A600E1DAEA /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		8404AC0A20A248AE00E1DAEA /* CoreML.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreML.framework; path = System/Library/Frameworks/CoreML.framework; sourceTree = SDKROOT; };
 		8404AC0C20A248B400E1DAEA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -48,7 +49,7 @@
 		84CD691D1FE6892200C5B7EC /* CaptureVideoPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureVideoPreviewView.swift; sourceTree = "<group>"; };
 		84CD691F1FE6893A00C5B7EC /* CIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIImage.swift; sourceTree = "<group>"; };
 		D72D4BCB2588A75900C11749 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
-		D743776A2578EF57009BAB47 /* iOSDevCenters+GIF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "iOSDevCenters+GIF.swift"; path = "/Users/parkjoohyun/git/mask_deeplearning/no_mask_ios/ObjectRecognition/iOSDevCenters+GIF.swift"; sourceTree = "<absolute>"; };
+		D743776A2578EF57009BAB47 /* iOSDevCenters+GIF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "iOSDevCenters+GIF.swift"; path = "/Users/simonpark/mask_deeplearning/no_mask_ios/ObjectRecognition/iOSDevCenters+GIF.swift"; sourceTree = "<absolute>"; };
 		D74A440925735BEF00FD6C76 /* MobileNetV2.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = MobileNetV2.mlmodel; sourceTree = "<group>"; };
 		D74A441025735F8A00FD6C76 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		D74A442F25776AA000FD6C76 /* NanumSquareEB.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareEB.otf; sourceTree = "<group>"; };
@@ -56,7 +57,6 @@
 		D7716E33258B05F900F328E7 /* buttonPush.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = buttonPush.mp3; sourceTree = "<group>"; };
 		D7716E3E258B070700F328E7 /* loading.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = loading.mp3; sourceTree = "<group>"; };
 		D7716E41258B0DE500F328E7 /* WaitCaptureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitCaptureViewController.swift; sourceTree = "<group>"; };
-		D7716E45258B3FCE00F328E7 /* rgb_MaskModel.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = rgb_MaskModel.mlmodel; sourceTree = "<group>"; };
 		D7E7797B257F25EF00C6B7FE /* alart.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = alart.mp3; sourceTree = "<group>"; };
 		D7E7797E257F277600C6B7FE /* pass.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = pass.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -120,9 +120,9 @@
 				84CD69101FE5472200C5B7EC /* Assets.xcassets */,
 				84CD69121FE5472200C5B7EC /* LaunchScreen.storyboard */,
 				D74A440925735BEF00FD6C76 /* MobileNetV2.mlmodel */,
-				D7716E45258B3FCE00F328E7 /* rgb_MaskModel.mlmodel */,
 				84CD69151FE5472200C5B7EC /* Info.plist */,
 				84CD691B1FE688EA00C5B7EC /* VideoCapture.swift */,
+				680BD244258F0B870045C936 /* model_12_19_1220.mlmodel */,
 				84CD691D1FE6892200C5B7EC /* CaptureVideoPreviewView.swift */,
 				84CD691F1FE6893A00C5B7EC /* CIImage.swift */,
 				D74A441025735F8A00FD6C76 /* Main.storyboard */,
@@ -239,10 +239,10 @@
 				D74A440A25735BEF00FD6C76 /* MobileNetV2.mlmodel in Sources */,
 				84CD69201FE6893A00C5B7EC /* CIImage.swift in Sources */,
 				D7716E42258B0DE500F328E7 /* WaitCaptureViewController.swift in Sources */,
+				680BD245258F0B870045C936 /* model_12_19_1220.mlmodel in Sources */,
 				84CD691E1FE6892200C5B7EC /* CaptureVideoPreviewView.swift in Sources */,
 				D743776B2578EF57009BAB47 /* iOSDevCenters+GIF.swift in Sources */,
 				D7716E302589CBA700F328E7 /* WaitServerViewController.swift in Sources */,
-				D7716E46258B3FCE00F328E7 /* rgb_MaskModel.mlmodel in Sources */,
 				84CD690C1FE5472200C5B7EC /* ViewController.swift in Sources */,
 				84CD691C1FE688EA00C5B7EC /* VideoCapture.swift in Sources */,
 				84CD690A1FE5472200C5B7EC /* AppDelegate.swift in Sources */,
@@ -382,18 +382,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = GPPXQWWJUH;
+				DEVELOPMENT_TEAM = 3KH42AY7UZ;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/ObjectRecognition/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = simonpark;
+				PRODUCT_BUNDLE_IDENTIFIER = simonswpark;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -405,18 +405,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = GPPXQWWJUH;
+				DEVELOPMENT_TEAM = 3KH42AY7UZ;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/ObjectRecognition/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = simonpark;
+				PRODUCT_BUNDLE_IDENTIFIER = simonswpark;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
