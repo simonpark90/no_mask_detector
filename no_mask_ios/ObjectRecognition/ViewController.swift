@@ -24,7 +24,7 @@ class ViewController: UIViewController {
     
     let videoCapture : VideoCapture = VideoCapture()
     let context = CIContext()
-    let model = rgb_MaskModel()
+    let model = model_12_19_1220()
 //    let model = MobileNetV2()
 //         let model = Inceptionv3()
     let loading = NVActivityIndicatorView(frame: CGRect(x: 168.0, y: 717.0, width: 82, height: 82),
@@ -110,8 +110,14 @@ class ViewController: UIViewController {
         let faces = faceDetector?.features(in: image)
 
         if let face = faces?.first as? CIFaceFeature {
-            print("Found face at \(face.bounds)")
-            if face.hasLeftEyePosition && face.hasRightEyePosition && face.hasMouthPosition && face.hasFaceAngle{
+            print("얼굴 경계 : \(face.bounds)")
+            if face.hasLeftEyePosition && face.hasRightEyePosition && face.hasMouthPosition && face.hasFaceAngle
+//                (face.rightEyePosition.x - face.leftEyePosition.x > 60 && face.rightEyePosition.x - face.leftEyePosition.x < 140)
+                {
+                print("왼쪽 눈 : \(face.leftEyePosition)")
+                print("오른쪽 눈 : \(face.rightEyePosition)")
+                print("입 : \(face.mouthPosition)")
+                print("얼굴 : \(face.faceAngle)")
                 isFace = true
             }else{
                 isFace = false
@@ -224,6 +230,12 @@ class ViewController: UIViewController {
         // 통과 사운드 재생
         self.playAudio(filename: "pass")
         
+        // 3초동안 일시 중지
+        let time = DispatchTime.now() + .seconds(3)
+        let waitingCapture = startWaitForCapture()
+        DispatchQueue.main.asyncAfter(deadline: time) {
+            self.endWaiting(child: waitingCapture)
+        }
     }
     
     /**
